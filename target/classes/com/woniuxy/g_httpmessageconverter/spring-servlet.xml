@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+	
+	<context:component-scan base-package="com.woniuxy.g_httpmessageconverter" />
+	
+	<mvc:annotation-driven>
+		<!--  register-defaults="true"就会把springmvc内置的一系列HttpMessageConverter加载进来，其中就包括StringHttpMessageConverter -->
+		<mvc:message-converters register-defaults="true">
+	         <bean class="com.woniuxy.g_httpmessageconverter.b.MyHttpMessageConverter">
+	             <property name="supportedMediaTypes">
+	                 <list>
+	                     <value>woniu/gao</value>
+	                 </list>
+	             </property>
+	         </bean>
+	         <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+	         	<property name="objectMapper">
+	         		<bean class="com.fasterxml.jackson.databind.ObjectMapper">
+	         			<property name="dateFormat">
+	         				<bean class="java.text.SimpleDateFormat" c:pattern="yyyy/MM/dd">
+	         				</bean>
+	         			</property>
+	         		</bean>
+	         	</property>
+	         </bean>
+	     </mvc:message-converters>
+	</mvc:annotation-driven>
+	
+	
+	
+	
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+</beans>

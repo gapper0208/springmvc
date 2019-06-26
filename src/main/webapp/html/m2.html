@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+	<h3>m2.html</h3>
+	
+	开始满意自己，就是开始退步！
+	
+	<script>
+		$(function() {
+			$("button:contains(ajax get)").click(function(){
+				$.ajax({
+					type:"get",
+					url:"http://localhost/springmvc/users",
+					headers: {
+						Accept:"application/json" 
+					},
+					success:function(data) {
+						for(p in data) {
+							alert(data[p].uid + " " + data[p].name + " " + data[p].birthday );
+						}
+					}			
+				});
+			});
+
+
+			$("button:contains(ajax post)").click(function(){
+				$.ajax({
+					type:"post",
+					url:"http://localhost/springmvc/users",
+					headers: {
+						Accept:"application/json" 
+					},
+					success:function(data) {
+						alert(data);
+					}			
+				});
+			});
+
+
+			$("button:contains(ajax put)").click(function(){
+				$.ajax({
+					type:"post",
+					url:"http://localhost/springmvc/users",
+					data:{"abc":"wahaha","_method":"put"},
+					headers: {
+						Accept:"application/json" 
+					},
+					success:function(data) {
+						alert(data);
+					}			
+				});
+			});
+
+			$("button:contains(ajax delete)").click(function(){
+				$.ajax({
+					type:"post",
+					url:"http://localhost/springmvc/users",
+					data:{uid:111,"_method":"delete"},
+					headers: {
+						Accept:"application/json" 
+					},
+					success:function(data) {
+						alert(data);
+					}			
+				});
+			});
+		});
+	</script>
+	
+	<button>ajax get</button>
+	<button>ajax post</button>
+	<button>ajax put</button>
+	<button>ajax delete</button>
+		
+</body>
+</html>

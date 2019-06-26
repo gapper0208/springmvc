@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+
+	<!-- 映射器和适配器是可以不用明显地定义出来的！它们都有默认的配置 -->
+	<!-- 
+		映射器默认为BeanNameUrlHandlerMapping
+		适配器默认为SimpleControllerHandlerAdapter
+	 -->
+	<bean id="/uc.do" class="com.woniuxy.c_default.UserController" />
+	
+	<!-- 
+		视图解析器也有默认的配置，但默认的不是InternalResourceViewResolver，也就说，默认的视图解析器不是那个加前后缀的那个！
+		默认的视图解析器，功能是把逻辑视图名直接当做物理视图！所以如果要使用视图解析器的化，建议使用InternalResourceViewResolver！
+	 -->
+	
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+
+</beans>

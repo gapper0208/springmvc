@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+
+	<!-- 
+		只有是处理器映射器：
+			接受请求url
+			返回handler（姑且理解为控制器） 
+		1.BeanNameUrlHandlerMapping，拿着请求中的url，与bean的id比较
+		2.SimpleUrlHandlerMapping，当请求中的url与bean的id不相等的时候，才使用这个映射器
+		<bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" />
+	-->
+	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping" >
+		<property name="urlMap">
+			<props>
+				<prop key="/uc.do">kk</prop>
+				<prop key="/uc2.do">qq</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 
+		处理器设配器 
+			接受handler（暂时理解为控制器）
+			返回ModelAndView
+		1. SimpleControllerHandlerAdapter，要求控制器必须实现Controller接口
+		2. HttpRequestHandlerAdapter，要求控制器必须实现HttpRequestHandler
+			<bean class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter" />	
+	-->
+		<bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter" />
+	
+	<!-- 
+		视图解析器
+			接受ModelAndView
+			返回物理视图
+		1. InternalResourceViewResolver，会在逻辑视图名前后加上前缀和后缀，进而得到物理视图
+		2. BeanNameViewResolver，不会在ModelAndView中封装的逻辑视图名前后加前后缀，而是把ModelAndView中
+			封装的逻辑视图名当做一个bean的id，来找到这个bean，且该bean所属的类，还必须实现View接口！最终跳转到哪个物理视图，
+			就是有类中的render方法来决定的了！
+		 	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver"></bean>
+	 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+		
+	<!-- 让spring ioc容器来管理控制器的bean -->
+	<bean id="kk" class="com.woniuxy.b_replace.UserController"></bean>
+	<bean id="qq" class="com.woniuxy.b_replace.UserController2"></bean>
+	<bean id="a" class="com.woniuxy.b_replace.MyView"></bean>
+
+</beans>
